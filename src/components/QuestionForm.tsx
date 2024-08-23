@@ -6,8 +6,13 @@ interface QuestionFormProps {
 
 const QuestionForm: React.FC<QuestionFormProps> = ({ question }) => {
   return (
-    <div className='flex flex-col items-center mx-20'>
-      <div className='text-xl font-medium mb-4'>{question}</div>
+    <div className='flex items-center text-center'>
+      <div
+        className='text-xl font-medium mb-4 break-words'
+        style={{ width: "400px" }}
+      >
+        {question}
+      </div>
     </div>
   );
 };
