@@ -16,6 +16,7 @@ export interface Step {
   id: number;
   name: string;
   estimate: number;
-  selected: boolean;
+  selected?: boolean;
+  total?: boolean;
   onSelect?: () => void;
 }

@@ -2,29 +2,49 @@ import React, { useState } from "react";
 import { Step } from "../types/types";
 import CheckMark from "./icons/CheckMark";
 
-const StepCard: React.FC<Step> = ({ name, estimate, selected, onSelect }) => {
+const StepCard: React.FC<Step> = ({
+  name,
+  estimate,
+  selected = false,
+  onSelect,
+  total = false,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
-  const bgColor = selected || isHovered ? "bg-purple-800" : "bg-white";
-  const textColor = selected || isHovered ? "text-white" : "text-purple-600";
-  const estimateColor =
-    selected || isHovered ? "text-white" : "text-purple-300";
 
-  // Next: to update svg transition with card hover to match card transition
+  // colors based on selection, hover state, and total
+  const isActive = selected || isHovered;
+  const bgColor = isActive ? "bg-purple-800" : "bg-white";
+  const textColor = isActive ? "text-white" : "text-purple-600";
+  const estimateColor = isActive ? "text-white" : "text-purple-300";
+  const valueColor = total
+    ? "text-red-500" : isActive
+    ? "text-white" : "text-purple-500";
+
+  // common classes
+  const cardClasses = `flex items-center p-6 rounded-full shadow-md ${bgColor} ${textColor} transition-colors duration-75`;
+  const textClasses = total
+    ? "px-10 text-lg font-medium"
+    : "text-lg font-medium";
+  const estimateClasses = total ? "text-red-500 px-10" : estimateColor;
+  const cursorClass = total ? "" : "cursor-pointer";
+
   return (
     <div
-      className={`flex items-center p-6 rounded-full shadow-md cursor-pointer ${bgColor} ${textColor} transition-colors duration-75`}
-      onClick={onSelect}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className={`${cardClasses} ${cursorClass}`}
+      onClick={!total ? onSelect : undefined}
+      onMouseEnter={() => !total && setIsHovered(true)}
+      onMouseLeave={() => !total && setIsHovered(false)}
     >
       <div className='flex items-center flex-grow justify-between w-96'>
-        <CheckMark selected={selected} hover={isHovered} />
-        <div className='text-lg font-medium'>{name}</div>
-        <div className='flex-column text-center'>
-          <div className={`text-sm font-semibold ${estimateColor}`}>
-            ESTIMATE
-          </div>
-          <div>£{estimate.toFixed(2)}</div>
+        {!total && <CheckMark selected={selected} hover={isHovered} />}
+        <div className={textClasses}>{name}</div>
+        <div className='flex flex-col items-center'>
+          {!total && (
+            <div className={`text-sm font-semibold ${estimateClasses}`}>
+              ESTIMATE
+            </div>
+          )}
+          <div className={valueColor}>£{estimate.toFixed(2)}</div>
         </div>
       </div>
     </div>
