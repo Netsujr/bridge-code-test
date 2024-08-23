@@ -48,9 +48,6 @@ const Questions: React.FC = () => {
   return (
     <div className='flex min-h-screen  py-12 items-center justify-center'>
       <div className='flex flex-col min-h-screen  py-12 items-center justify-center'>
-        <h1 className='text-3xl font-bold text-red-600 mb-8'>
-          Calculating Your Total Costs
-        </h1>
         <div>
           <div className='flex items-center w-full'>
             <button

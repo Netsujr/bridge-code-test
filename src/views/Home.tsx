@@ -20,10 +20,6 @@ const Home: React.FC = () => {
 
   return (
     <div className='min-h-screen  flex flex-col items-center justify-center py-12'>
-      <h1 className='text-3xl font-bold text-red-600 mb-8'>
-        {/* Next: this could probably be a constant component header */}
-        Calculating Your Total Costs
-      </h1>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {steps.map((step: any, index: number) => (
           <StepCard
