@@ -9,6 +9,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Optional: to prevent scrollbars */
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('./assets/images/ant-rozetsky-HXOllTSwrpM-unsplash@2x.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  filter: blur(4px);
+  opacity: 0.2;
+  z-index: -1;
 }
 
 code {

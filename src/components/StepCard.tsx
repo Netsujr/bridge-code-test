@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Step } from "../types/types";
+import CheckMark from "./icons/CheckMark";
 
 const StepCard: React.FC<Step> = ({ name, estimate, selected, onSelect }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -17,6 +18,7 @@ const StepCard: React.FC<Step> = ({ name, estimate, selected, onSelect }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className='flex items-center flex-grow justify-between w-96'>
+        <CheckMark selected={selected} hover={isHovered} />
         <div className='text-lg font-medium'>{name}</div>
         <div className='flex-column text-center'>
           <div className={`text-sm font-semibold ${estimateColor}`}>

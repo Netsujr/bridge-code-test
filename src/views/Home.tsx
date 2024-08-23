@@ -1,11 +1,11 @@
 import React from "react";
 import StepCard from "../components/StepCard";
+import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore";
-// import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
   const { steps, updateSteps, totalCost } = useStore();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSelect = (index: number) => {
     const updatedSteps = steps.map((step: any, selected: any) =>
@@ -15,11 +15,13 @@ const Home: React.FC = () => {
   };
 
   const handleContinue = () => {
+    navigate("/questions");
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12'>
+    <div className='min-h-screen  flex flex-col items-center justify-center py-12'>
       <h1 className='text-3xl font-bold text-red-600 mb-8'>
+        {/* Next: this could probably be a constant component header */}
         Calculating Your Total Costs
       </h1>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
@@ -34,9 +36,11 @@ const Home: React.FC = () => {
           />
         ))}
       </div>
+      {/* Next: updated the total card to match buttons */}
       <div className='mt-8 text-xl font-bold'>
         Total: <span className='text-red-600'>£{totalCost.toFixed(2)}</span>
       </div>
+      {/* create button component */}
       <button
         className='mt-4 px-8 py-2 bg-red-600 text-white rounded-full shadow-lg'
         onClick={handleContinue}

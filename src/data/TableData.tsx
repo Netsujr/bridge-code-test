@@ -1,6 +1,6 @@
 import { TableData } from "../types/types";
 
-// example of how I would track the data in the table if needed elsewhere in app (state)
+// track the data in the table if needed elsewhere in app (state)
 const tableData: TableData = {
   supplierAndProduct: {
     text: "Supplier & product",
