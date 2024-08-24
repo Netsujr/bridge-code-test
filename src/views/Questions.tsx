@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import QuestionForm from "../components/QuestionForm";
 import useStore from "../store/useStore";
 import questions from "../data/FormQuestions";
@@ -7,19 +8,30 @@ import Button from "../components/Button";
 import { ReactComponent as PrevIcon } from "../assets/images/Path_281.svg";
 import { ReactComponent as NextIcon } from "../assets/images/Path_280.svg";
 
+
+const variants = {
+  initial: (direction: any) => ({ opacity: 0, x: 150 * direction }),
+  animate: { opacity: 1, x: 0 },
+  exit: (direction: any) => ({ opacity: 0, x: -150 * direction }),
+};
+
 const Questions: React.FC = () => {
+  const [direction, setDirection] = useState(1);
   const navigate = useNavigate();
+
   const {
     currentIndex,
-    transitioning,
     answers,
     setCurrentIndex,
     setTransitioning,
     setAnswer,
   } = useStore();
 
+
+  // Methods
   const handleNext = () => {
     setAnswer(currentIndex, answers[currentIndex]);
+    setDirection(1);
 
     if (currentIndex < questions.length - 1) {
       setTransitioning(true);
@@ -34,6 +46,7 @@ const Questions: React.FC = () => {
 
   const handlePrev = () => {
     setAnswer(currentIndex, answers[currentIndex]);
+    setDirection(-1);
 
     if (currentIndex > 0) {
       setTransitioning(true);
@@ -58,18 +71,20 @@ const Questions: React.FC = () => {
             />
           </div>
 
-          <div className='flex-1 flex justify-center'>
-            <div
-              className={`duration-300 ${
-                transitioning ? "opacity-0" : "opacity-100"
-              }`}
+          <AnimatePresence mode='wait'>
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              initial='initial'
+              animate='animate'
+              exit='exit'
+              variants={variants}
+              transition={{ duration: 0.3 }}
+              className='flex-1 flex justify-center'
             >
               <QuestionForm question={questions[currentIndex].text} />
-              <div className='flex-1 flex justify-center font-light text-gray-500 text-sm'>
-                {`${currentIndex + 1} of ${questions.length}`}
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
 
           <div className='flex-1 flex justify-center'>
             <Button
@@ -78,6 +93,9 @@ const Questions: React.FC = () => {
               children={<NextIcon />}
             />
           </div>
+        </div>
+        <div className='flex-1 flex justify-center font-light text-gray-500 text-sm'>
+          {`${currentIndex + 1} of ${questions.length}`}
         </div>
       </div>
 

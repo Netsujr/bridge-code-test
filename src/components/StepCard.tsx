@@ -14,18 +14,18 @@ const StepCard: React.FC<Step> = ({
   // colors based on selection, hover state, and total
   const isActive = selected || isHovered;
   const bgColor = isActive ? "bg-purple-800" : "bg-white";
-  const textColor = isActive ? "text-white" : "text-purple-600";
+  const textColor = isActive ? "text-white" : "text-purple-800";
   const estimateColor = isActive ? "text-white" : "text-purple-300";
   const valueColor = total
-    ? "text-red-500" : isActive
-    ? "text-white" : "text-purple-500";
+    ? "text-red-600" : isActive
+    ? "text-white" : "text-purple-800";
 
   // common classes
   const cardClasses = `flex items-center p-6 rounded-full shadow-md ${bgColor} ${textColor} transition-colors duration-75`;
   const textClasses = total
     ? "px-10 text-lg font-medium"
     : "text-lg font-medium";
-  const estimateClasses = total ? "text-red-500 px-10" : estimateColor;
+  const estimateClasses = total ? "text-red-600 px-10" : estimateColor;
   const cursorClass = total ? "" : "cursor-pointer";
 
   return (
