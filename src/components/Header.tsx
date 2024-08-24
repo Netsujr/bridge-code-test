@@ -5,8 +5,8 @@ const Header: React.FC = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  const text = "Calculating Your Total Costs";
-  const resultsText = " - Your Results";
+  const text = "CALCULATING YOUR TOTAL COSTS";
+  const resultsText = " - YOUR RESULTS";
   const results = path === "/results";
 
   return (
