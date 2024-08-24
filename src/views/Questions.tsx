@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import QuestionForm from "../components/QuestionForm";
 import useStore from "../store/useStore";
 import questions from "../data/FormQuestions";
+import Button from "../components/Button";
+import { ReactComponent as PrevIcon } from "../assets/images/Path_281.svg";
+import { ReactComponent as NextIcon } from "../assets/images/Path_280.svg";
 
 const Questions: React.FC = () => {
   const navigate = useNavigate();
@@ -43,18 +46,16 @@ const Questions: React.FC = () => {
     }
   };
 
-  // Next: add a fixed width to the the form
   return (
-    <div className='flex min-h-screen p-20 items-center justify-center'>
+    <div className='flex min-h-screen p-[20rem] items-center justify-center'>
       <div className='flex flex-col w-2/3 h-full justify-center items-center'>
         <div className='flex items-center w-full'>
           <div className='flex-1 flex justify-center'>
-            <button
-              className='px-4 py-2 bg-red-600 text-white rounded-full shadow-lg'
+            <Button
               onClick={handlePrev}
-            >
-              Prev
-            </button>
+              className='bg-red-600 text-white w-[40px] h-[40px] justify-center'
+              children={<PrevIcon className='mr-1' />}
+            />
           </div>
 
           <div className='flex-1 flex justify-center'>
@@ -71,12 +72,11 @@ const Questions: React.FC = () => {
           </div>
 
           <div className='flex-1 flex justify-center'>
-            <button
-              className='px-4 py-2 bg-red-600 text-white rounded-full shadow-lg'
+            <Button
               onClick={handleNext}
-            >
-              Next
-            </button>
+              className='bg-red-600 text-white w-[40px] h-[40px] justify-center'
+              children={<NextIcon />}
+            />
           </div>
         </div>
       </div>

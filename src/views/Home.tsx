@@ -4,6 +4,7 @@ import StepCard from "../components/StepCard";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore";
 import Button from "../components/Button";
+import { ReactComponent as PlayIcon } from "../assets/images/Group_431.svg";
 
 const Home: React.FC = () => {
   const { steps, updateSteps, totalCost } = useStore();
@@ -41,10 +42,14 @@ const Home: React.FC = () => {
           name='Total'
           estimate={totalCost}
           total
-          />
+        />
       </div>
-      <Button onClick={handleContinue} className='mt-4 absolute bottom-[275px] right-[350px] w-[150px]'>
-        Continue
+      <Button
+        onClick={handleContinue}
+        className='absolute bottom-[275px] right-[350px] w-[150px] justify-between'
+      >
+        <p className="px-4">Continue</p>
+        <PlayIcon className='w-7 h-7' />
       </Button>
     </div>
   );
