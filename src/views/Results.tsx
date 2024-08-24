@@ -6,6 +6,13 @@ import Button from "../components/Button";
 import { ReactComponent as PlayIcon } from "../assets/images/Group_431.svg";
 import Pill from "../components/ResultsPill";
 
+const formatNumber = (number: number) => {
+  return new Intl.NumberFormat(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(number);
+};
+
 const Results: React.FC = () => {
   const navigate = useNavigate();
   const { steps, answers, resetState } = useStore();
@@ -16,11 +23,11 @@ const Results: React.FC = () => {
       .reduce((total: any, step: any) => total + step.estimate, 0);
   };
 
+  // a little janky here
   const answer1 = answers[0] ?? 0;
   const answer2 = answers[1] ?? 0;
   const answer3 = answers[2] ?? 0;
 
-  // As long as we know the ids we want, this should be okay (maybe better to find id by the key)
   const supplierAndProduct = estimateTotal([1, 2]) * answer2;
   const quotationToOrderProcess = estimateTotal([3, 4, 5, 6]) * answer2;
   const expeditingAndReceivingOrders = estimateTotal([7]) * answer1;
@@ -55,6 +62,11 @@ const Results: React.FC = () => {
     { text: "Total Process Costs (year)", cost: totalCost, isTotal: true },
   ];
 
+  const formattedRows = rows.map((row: any) => ({
+    ...row,
+    cost: formatNumber(row.cost),
+  }));
+
   return (
     <div className='min-h-screen flex items-center justify-center p-12'>
       <div className='p-12 w-1/2'>
@@ -77,7 +89,7 @@ const Results: React.FC = () => {
       </div>
 
       <div className='w-1/2'>
-        {rows.map((row: any, index: number) => (
+        {formattedRows.map((row: any, index: number) => (
           <Pill
             key={index}
             text={row.text}

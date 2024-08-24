@@ -2,7 +2,7 @@ import React from "react";
 
 interface PillProps {
   text: string;
-  cost: number;
+  cost: string;
   isTotal?: boolean;
 }
 
@@ -25,7 +25,7 @@ const ResultsPill: React.FC<PillProps> = ({ text, cost, isTotal }) => {
           isTotal ? "bg-white-600 text-purple-800" : "bg-red-600 text-white"
         }`}
       >
-        £{cost.toFixed(2)}
+        £{cost}
       </div>
     </div>
   );
