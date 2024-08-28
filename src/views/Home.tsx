@@ -1,6 +1,6 @@
-// Home.tsx
 import React from "react";
 import StepCard from "../components/StepCard";
+import TotalStepCard from "../components/TotalStepCard"; // Import the new TotalStepCard
 import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore";
 import Button from "../components/Button";
@@ -35,22 +35,23 @@ const Home: React.FC = () => {
           />
         ))}
       </div>
-      <div className='mt-8 text-xl font-bold relative'>
-        <StepCard
-          key={steps.length}
-          id={steps.length}
-          name='Total'
-          estimate={totalCost}
-          total
-        />
+      <div className='flex items-center justify-between w-full'>
+        <div className='w-1/3'> {/* Empty div */} </div>
+
+        <div className='mt-8 text-xl font-bold relative text-center'>
+          <TotalStepCard key={steps.length} name='Total' estimate={totalCost} />
+        </div>
+
+        <div className='w-1/3'>
+          <Button
+            onClick={handleContinue}
+            className='h-[50px] w-[150px] justify-between'
+          >
+            <p className='px-4'>Continue</p>
+            <PlayIcon className='w-7 h-7' />
+          </Button>
+        </div>
       </div>
-      <Button
-        onClick={handleContinue}
-        className='absolute bottom-[275px] right-[350px] w-[150px] justify-between'
-      >
-        <p className="px-4">Continue</p>
-        <PlayIcon className='w-7 h-7' />
-      </Button>
     </div>
   );
 };

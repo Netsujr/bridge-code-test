@@ -1,9 +1,6 @@
 import React from "react";
+import { CheckMarkProps } from "../../types/types";
 
-interface CheckMarkProps {
-  selected: boolean;
-  hover: boolean;
-}
 
 const CheckMark: React.FC<CheckMarkProps> = ({ selected, hover }) => {
   const fillColor = selected || hover ? "#ffffff" : "#5f259f";

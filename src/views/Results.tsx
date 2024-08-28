@@ -4,7 +4,8 @@ import useStore from "../store/useStore";
 import { Step } from "../types/types";
 import Button from "../components/Button";
 import { ReactComponent as PlayIcon } from "../assets/images/Group_431.svg";
-import Pill from "../components/ResultsPill";
+import ResultsPill from "../components/ResultsPill";
+import TotalResultsPill from "../components/TotalResultsPill";
 
 const formatNumber = (number: number) => {
   return new Intl.NumberFormat(undefined, {
@@ -23,7 +24,6 @@ const Results: React.FC = () => {
       .reduce((total: any, step: any) => total + step.estimate, 0);
   };
 
-  // a little janky here
   const answer1 = answers[0] ?? 0;
   const answer2 = answers[1] ?? 0;
   const answer3 = answers[2] ?? 0;
@@ -59,13 +59,14 @@ const Results: React.FC = () => {
     },
     { text: "Processing Invoices Costs", cost: processingInvoices },
     { text: "Paying Suppliers Costs", cost: payingSuppliers },
-    { text: "Total Process Costs (year)", cost: totalCost, isTotal: true },
   ];
 
   const formattedRows = rows.map((row: any) => ({
     ...row,
     cost: formatNumber(row.cost),
   }));
+
+  const formattedTotal = formatNumber(totalCost);
 
   return (
     <div className='min-h-screen flex items-center justify-center p-12'>
@@ -79,7 +80,7 @@ const Results: React.FC = () => {
 
         <p>
           Based on what you have told us about your process we can estimate that
-          the following costs are being insured within your procurement
+          the following costs are being incurred within your procurement
           processes.
         </p>
         <Button onClick={handleBack} className='mt-10'>
@@ -90,20 +91,27 @@ const Results: React.FC = () => {
 
       <div className='w-1/2'>
         {formattedRows.map((row: any, index: number) => (
-          <Pill
-            key={index}
-            text={row.text}
-            cost={row.cost}
-            isTotal={row.isTotal}
-          />
+          <ResultsPill key={index} text={row.text} cost={row.cost} />
         ))}
 
-        <div className='flex mt-6'>
+        <TotalResultsPill
+          text='Total Process Costs (year)'
+          cost={formattedTotal}
+        />
+
+        <div className='flex-column mt-6'>
           <Button
             onClick={handleStartOver}
-            className='bg-red-600 text-white px-8 py-2 rounded-full shadow-lg'
+            className='px-8 py-2 mb-4'
           >
             Send me this report
+          </Button>
+
+          <Button
+            onClick={handleStartOver}
+            className='px-8 py-2'
+          >
+            Start Over
           </Button>
         </div>
       </div>

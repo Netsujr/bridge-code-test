@@ -56,6 +56,12 @@ const Questions: React.FC = () => {
     }
   };
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setAnswer(currentIndex, numericValue);
+  };
+
 //  const getPreviousAnswers = () => {
 //    return questions.slice(0, currentIndex).map((question, index) => (
 //      <div key={index} className='mb-2 text-xl font-medium bg-transparent'>
@@ -125,7 +131,7 @@ const Questions: React.FC = () => {
           placeholder='Type here'
           className='p-2 border border-gray-600 rounded-md w-48 ml-20 shadow-sm shadow-gray-700'
           value={answers[currentIndex] || ""}
-          onChange={(event) => setAnswer(currentIndex, event.target.value)}
+          onChange={handleInputChange}
         />
       </div>
     </div>

@@ -2,7 +2,6 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import dummyData from "../data/DummyData";
 import questions from "../data/FormQuestions";
-// import tableData from "../data/TableData";
 
 const useStore = create(
   devtools((set, get) => ({
@@ -26,6 +25,7 @@ const useStore = create(
     setCurrentIndex: (index) => set({ currentIndex: index }),
     setTransitioning: (isTransitioning) =>
       set({ transitioning: isTransitioning }),
+
     setAnswer: (index, answer) => {
       const updatedAnswers = [...get().answers];
       updatedAnswers[index] = answer;
