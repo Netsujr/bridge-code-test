@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store/useStore";
-import { Step } from "../types/types";
 import Button from "../components/Button";
 import { ReactComponent as PlayIcon } from "../assets/images/Group_431.svg";
 import ResultsPill from "../components/ResultsPill";
@@ -16,30 +15,7 @@ const formatNumber = (number: number) => {
 
 const Results: React.FC = () => {
   const navigate = useNavigate();
-  const { steps, answers, resetState } = useStore();
-
-  const estimateTotal = (ids: number[]): number => {
-    return steps
-      .filter((step: Step) => step.selected && ids.includes(step.id))
-      .reduce((total: any, step: any) => total + step.estimate, 0);
-  };
-
-  const answer1 = answers[0] ?? 0;
-  const answer2 = answers[1] ?? 0;
-  const answer3 = answers[2] ?? 0;
-
-  const supplierAndProduct = estimateTotal([1, 2]) * answer2;
-  const quotationToOrderProcess = estimateTotal([3, 4, 5, 6]) * answer2;
-  const expeditingAndReceivingOrders = estimateTotal([7]) * answer1;
-  const processingInvoices = estimateTotal([8]) * answer2;
-  const payingSuppliers = estimateTotal([9]) * answer3;
-
-  const totalCost =
-    supplierAndProduct +
-    quotationToOrderProcess +
-    expeditingAndReceivingOrders +
-    processingInvoices +
-    payingSuppliers;
+  const { results = [], resetState } = useStore();
 
   const handleStartOver = () => {
     resetState();
@@ -50,23 +26,13 @@ const Results: React.FC = () => {
     navigate("/questions");
   };
 
-  const rows = [
-    { text: "Supplier and Product Costs", cost: supplierAndProduct },
-    { text: "Quotation to Order Process Costs", cost: quotationToOrderProcess },
-    {
-      text: "Expediting and Receiving Orders Costs",
-      cost: expeditingAndReceivingOrders,
-    },
-    { text: "Processing Invoices Costs", cost: processingInvoices },
-    { text: "Paying Suppliers Costs", cost: payingSuppliers },
-  ];
+  const displayResults =
+    results.length > 0
+      ? results.filter((row: any) => row.text !== "Total Process Costs (year)")
+      : [{ text: "No data available", cost: 0 }];
 
-  const formattedRows = rows.map((row: any) => ({
-    ...row,
-    cost: formatNumber(row.cost),
-  }));
-
-  const formattedTotal = formatNumber(totalCost);
+  const totalCost =
+    results.find((row: any) => row.text === "Total Process Costs (year)")?.cost || 0;
 
   return (
     <div className='min-h-screen flex items-center justify-center p-12'>
@@ -79,7 +45,7 @@ const Results: React.FC = () => {
         </h2>
 
         <p>
-          Based on what you have told us about your process we can estimate that
+          Based on what you have told us about your process, we estimate that
           the following costs are being incurred within your procurement
           processes.
         </p>
@@ -90,27 +56,25 @@ const Results: React.FC = () => {
       </div>
 
       <div className='w-1/2'>
-        {formattedRows.map((row: any, index: number) => (
-          <ResultsPill key={index} text={row.text} cost={row.cost} />
+        {displayResults.map((row: any, index: number) => (
+          <ResultsPill
+            key={index}
+            text={row.text}
+            cost={formatNumber(row.cost)}
+          />
         ))}
 
         <TotalResultsPill
           text='Total Process Costs (year)'
-          cost={formattedTotal}
+          cost={formatNumber(totalCost)}
         />
 
         <div className='flex-column mt-6'>
-          <Button
-            onClick={handleStartOver}
-            className='px-8 py-2 mb-4'
-          >
+          <Button onClick={handleStartOver} className='px-8 py-2 mb-4'>
             Send me this report
           </Button>
 
-          <Button
-            onClick={handleStartOver}
-            className='px-8 py-2'
-          >
+          <Button onClick={handleStartOver} className='px-8 py-2'>
             Start Over
           </Button>
         </div>
